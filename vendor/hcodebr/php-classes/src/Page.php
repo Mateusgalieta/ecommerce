@@ -12,7 +12,7 @@ class Page {
     "data" => []
   ];
 
-  public function __contruct($opts = array()){
+  public function __construct($opts = array()){
 
     $this->options = array_merge($this->defaults, $opts);
 
@@ -45,7 +45,7 @@ class Page {
 
     $this->setData($data);
 
-  return $this->tpl->draw($name, $returnHTML);
+    return $this->tpl->draw($name, $returnHTML);
 
   }
 
