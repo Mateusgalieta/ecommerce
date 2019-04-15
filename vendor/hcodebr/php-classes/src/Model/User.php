@@ -174,6 +174,15 @@ class User extends Model {
                 $code = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_128, User::SECRET, $dataRecovery["idrecovrey"], MCRYPT_MODE_ECB));
             
                 $link = "http://localhos:8000/admin/forgot/reset?code=$code";
+            
+                $mailer = new Mailer($data["desemail"], $data["desperson"], "Redefinir senha para a conta", "forgot", array(
+                    "name" => $data["desperson"],
+                    "link" => $link
+                ));
+            
+                $mailer->send();
+
+                return Data;
             }
         }
     }
