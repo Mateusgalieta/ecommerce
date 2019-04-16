@@ -6,6 +6,7 @@ use \Slim\Slim;
 use \Hcode\Page;
 use \Hcode\PageAdmin;
 use \Hcode\Model\User;
+use Hcode\Model\Category;
 
 $app = new Slim();
 
@@ -259,6 +260,18 @@ $app->post("/users/create", function () {
 
 	header("Location: /");
  	exit;
+
+});
+
+$app->get("/admin/categories/", function() {
+
+  $categories = Category::listAll();
+
+  $page = new PageAdmin();
+
+  $page->setTpl("categories", array(
+    'categories' => $categories
+  ));
 
 });
 
