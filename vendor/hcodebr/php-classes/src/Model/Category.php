@@ -127,7 +127,12 @@ class Category extends Model {
             ':idcategory' => $this->getidcategory()
         ]);
 
+        
+
         $resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
+
+        var_dump($resultTotal);
+        exit;
     
         return [
             'data' => Product::checkList($results),
