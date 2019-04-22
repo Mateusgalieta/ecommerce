@@ -131,8 +131,6 @@ class Category extends Model {
 
         $resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
 
-        var_dump($resultTotal);
-        exit;
     
         return [
             'data' => Product::checkList($results),
