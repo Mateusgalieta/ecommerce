@@ -105,8 +105,7 @@ class Cart extends Model {
 
     public function addProduct(Product $product)
     {
-        var_dump($this->getidcart());
-        exit;
+        
 
         $sql = new Sql();
 
