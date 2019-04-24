@@ -118,8 +118,8 @@ class Category extends Model {
         $results = $sql->select("
             SELECT SQL_CALC_FOUND_ROWS *
             FROM tb_products a
-            INNER JOIN tb_productscategories n ON a.idproduct = b.idproduct
-            INNER JOIN tb_categories c ON c.idcategory = b.category
+            INNER JOIN tb_productscategories b ON a.idproduct = b.idproduct
+            INNER JOIN tb_categories c ON c.idcategory = b.idcategory
             WHERE c.idcategory = :idcategory
             LIMIT $start, $itemsPerPage;
 
@@ -127,7 +127,7 @@ class Category extends Model {
             ':idcategory' => $this->getidcategory()
         ]);
 
-        
+       
 
         $resultTotal = $sql->select("SELECT FOUND_ROWS() AS nrtotal;");
 
