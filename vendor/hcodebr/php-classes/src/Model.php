@@ -15,7 +15,6 @@ class Model {
 
         switch ($method)
         {
-
             case "get":
                 return (isset($this->values[$fieldName])) ? $this->values[$fieldName] : NULL;
             break;
@@ -35,9 +34,7 @@ class Model {
 
     public function getValues()
     {
-
         return $this->values;
-
     }
 
 
