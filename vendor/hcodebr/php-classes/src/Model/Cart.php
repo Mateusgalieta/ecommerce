@@ -115,6 +115,8 @@ class Cart extends Model {
             ':idproduct' => $product->getidproduct()
         ]);
 
+        $this->getCalculateTotal();
+
     }
 
     public function removeProduct(Product $product, $all = false)
@@ -134,6 +136,9 @@ class Cart extends Model {
                 ':idproduct' => $product->getidproduct()
             ]);
         }
+
+        $this->getCalculateTotal();
+
 
     }
 
@@ -236,6 +241,7 @@ class Cart extends Model {
 
         }
     }
+
     public static function formatValueToDecimal($value):float
     {
         $value = str_replace('.', '', $value);
@@ -259,6 +265,35 @@ class Cart extends Model {
     public static function clearMsgError()
     {
         $_SESSION[Cart::SESSION_ERROR] = NULL;
+    }
+
+    public function updateFreight()
+    {
+        if($this->getdeszipcode() != '') {
+
+            $this->setFreight($this->getdeszipcode());
+
+        }
+    }
+
+    public function getValues()
+    {
+
+        $this->getCalculateTotal();
+
+        return parent::getValues();
+
+    }
+
+    public function getCalculateTotal()
+    {
+        $this->updateFreight();
+
+        $totals = $this->getProductsTotals();
+
+        $this->setvlsubtotal($totals['vlprice']);
+        $this->setvltotal($totals['vlprice'] + $this->getvlfreight());
+
     }
 }
 
