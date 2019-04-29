@@ -9,6 +9,8 @@ class User extends Model {
 
     const SESSION = "User";
     const SECRET = "HcodePhp7_Secret";
+    const ERROR = "UserError";
+    const ERROR_REGISTER = "UserErrorRegister";
 
     public static function getFromSession()
     {
@@ -91,9 +93,13 @@ class User extends Model {
     public static function verifyLogin($inadmin = true)
     {
 
-        if(User::checkLogin($inadmin)){
+        if(!User::checkLogin($inadmin)){
           
-            header("Location: /admin/login");
+            if($inadmin) {
+                header("Location: /admin/login");
+            } else {
+                header("Location: /login");
+            }
             exit;
 
         }
@@ -125,7 +131,7 @@ class User extends Model {
         $results = $sql->select("CALL sp_users_save(:desperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin)", array(
             ":desperson" => $this->getdesperson(),
             ":deslogin" => $this->getdeslogin(),
-            ":despassword" => $this->getdespassword(),
+            ":despassword" => User::getPasswordHash($this->getdespassword()),
             ":desemail" => $this->getdesemail(),
             ":nrphone" => $this->getnrphone(),
             ":inadmin" => $this->getinadmin()
@@ -154,7 +160,7 @@ class User extends Model {
             ":iduser" => $this->getiduser(),
             ":desperson" => $this->getdesperson(),
             ":deslogin" => $this->getdeslogin(),
-            ":despassword" => $this->getdespassword(),
+            ":despassword" => User::getPasswordHash($this->getdespassword()),
             ":desemail" => $this->getdesemail(),
             ":nrphone" => $this->getnrphone(),
             ":inadmin" => $this->getinadmin()
@@ -277,6 +283,34 @@ class User extends Model {
             ":password" => $password,
             ":iduser" => $this->getiduser()
         ));
+
+    }
+
+    public static function setError($msg)
+    {
+        $_SESSION[User::Error] = $msg;
+    }
+
+    public static function getError()
+    {
+        $msg = (isset($_SESSION[User::Error])) && $_SESSION[User::Error] ? $_SESSION[User::Error] : ''; 
+
+        User::clearError();
+
+        return $msg;
+    }
+
+    public static function clearError()
+    {
+        $_SESSION[User::Error] = NULL;
+    }
+
+    public static function getPasswordHash($password)
+    {
+
+        return password_hash($password, PASSWORD_DEFAULT, [
+            'cost' => 12
+        ]);
 
     }
 
