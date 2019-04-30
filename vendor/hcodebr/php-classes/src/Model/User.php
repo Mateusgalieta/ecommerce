@@ -288,12 +288,12 @@ class User extends Model {
 
     public static function setError($msg)
     {
-        $_SESSION[User::Error] = $msg;
+        $_SESSION[User::ERROR] = $msg;
     }
 
     public static function getError()
     {
-        $msg = (isset($_SESSION[User::Error])) && $_SESSION[User::Error] ? $_SESSION[User::Error] : ''; 
+        $msg = (isset($_SESSION[User::ERROR])) && $_SESSION[User::ERROR] ? $_SESSION[User::ERROR] : ''; 
 
         User::clearError();
 
@@ -302,7 +302,7 @@ class User extends Model {
 
     public static function clearError()
     {
-        $_SESSION[User::Error] = NULL;
+        $_SESSION[User::ERROR] = NULL;
     }
 
     public static function getPasswordHash($password)

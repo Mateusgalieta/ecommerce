@@ -74,7 +74,7 @@ $app->get("/cart", function(){
   $page->setTpl("cart", [
     'cart' => $cart->getValues(),
     'products' => $cart->getProducts(),
-    //'error' => Cart::getMsgError()
+    'error' => Cart::getMsgError()
   ]);
 
 });
@@ -156,7 +156,7 @@ $app->get("/login", function() {
   $page = new Page();
 
   $page->setTpl("login", [
-    'error' => User::getError()
+    'error' =>  User::getError()
   ]);
 });
 
