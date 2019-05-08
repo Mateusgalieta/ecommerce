@@ -200,7 +200,7 @@ class Product extends Model {
         ];
     }
 
-    public static function getPageSearch($sarch, $page = 1, $itemsPerPage = 10)
+    public static function getPageSearch($search, $page = 1, $itemsPerPage = 10)
     {
 
         $start = ($page - 1) * $itemsPerPage;
